@@ -1,0 +1,31 @@
+[user]
+	name = Marrony Neris
+	email = neris.marrony@gmail.com
+[push]
+	default = simple
+[alias]
+	lg = log --graph --oneline --decorate --pretty=format:'%Cred%h%Creset %ad %s %C(yellow)%d%Creset %C(bold blue)<%an>%Creset' --date=short
+	hist = log --graph --full-history --all --pretty=format:'%Cred%h%Creset %ad %C(yellow)%d%Creset %C(bold blue)<%an>%Creset %s' --date=short
+	serve = daemon --reuseaddr --verbose --base-path=. --export-all ./.git
+	ff = merge --ff-only
+	bs = branch -va
+	type = cat-file -t
+	dump = cat-file -p
+	find = "!git ls-files | grep -i"
+	la = "!git config -l | grep alias | cut -c 7-"
+	alias = "!sh -c '[ $# = 2 ] && git config --global alias.\"$1\" \"$2\" && exit 0 || echo \"usage: git alias <new alias> <original command>\" >&2 && exit 1' -"
+	rm-alias = "!sh -c '[ $# = 1 ] && git config --global --unset alias.\"$1\" && exit 0 || echo \"usage git rm-alias <alias-name>\" >&2 && exit 1' -"
+	st = status
+	fp = fetch -p
+[core]
+	autocrlf = false
+	ignorecase = false
+	excludesfile = /Users/mneris/.gitignore
+
+[color]
+	status = true
+	branch = true
+	diff = true
+	grep = true
+	pager = true
+	showbranch = true
