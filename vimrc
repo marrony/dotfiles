@@ -1,18 +1,45 @@
-execute pathogen#infect()
 set nocompatible
+filetype off
+
+set rtp+=~/.vim/bundle/Vundle.vim
+
+call vundle#begin()
+
+Plugin 'VundleVim/Vundle.vim'
+
+Plugin 'derekwyatt/vim-scala'
+Plugin 'leafgarland/typescript-vim'
+
+Plugin 'scrooloose/nerdtree'
+Plugin 'altercation/vim-colors-solarized'
+
+"status line
+Plugin 'bling/vim-airline'
+"Plugin 'powerline/powerline'
+"Plugin 'itchyny/lightline.vim'
+
+Plugin 'elmcast/elm-vim'
+
+call vundle#end()
+
 syntax on
-set number
 set tabstop=2
 set shiftwidth=2
+set softtabstop=2
 set expandtab
+set autoindent
 set smarttab
 set smartindent
+set number
 set mouse=a
 set incsearch
 set paste
 set hlsearch
 set autoread
-filetype plugin on
+set laststatus=2
+
+autocmd Filetype python setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2
+autocmd Filetype elm    setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2
 
 "vmap <C-c> y:call system("pbcopy", getreg("\""))<CR>
 "vmap <M-C> y:call system("pbcopy", getreg("\""))<CR>
@@ -23,42 +50,11 @@ filetype plugin on
 map <F2> :NERDTreeToggle<CR>
 vmap <C-c> "+y
 vmap <S-c> "+y
-"imap <C-c> "+y<CR>
+imap <C-c> "+y<CR>
 
-set statusline=
-set statusline+=%7*\[%n]                                  "buffernr
-set statusline+=%1*\ %<%F\                                "File+path
-set statusline+=%2*\ %y\                                  "FileType
-set statusline+=%3*\ %{''.(&fenc!=''?&fenc:&enc).''}      "Encoding
-set statusline+=%3*\ %{(&bomb?\",BOM\":\"\")}\            "Encoding2
-set statusline+=%4*\ %{&ff}\                              "FileFormat (dos/unix..) 
-set statusline+=%5*\ %{&spelllang}\%{HighlightSearch()}\  "Spellanguage & Highlight on?
-set statusline+=%8*\ %=\ row:%l/%L\ (%03p%%)\             "Rownumber/total (%)
-set statusline+=%9*\ col:%03c\                            "Colnr
-set statusline+=%0*\ \ %m%r%w\ %P\ \                      "Modified? Readonly? Top/bot.
+"au BufNewFile,BufRead *.gradle set filetype=groovy
+"au BufNewFile,BufRead *.scala set filetype=scala
 
-function! HighlightSearch()
-    if &hls
-        return 'H'
-    else
-        return ''
-    endif
-endfunction
-
-set laststatus=2
-
-hi User1 ctermfg=3  ctermbg=4
-hi User2 ctermfg=101  ctermbg=91
-hi User3 ctermfg=102  ctermbg=92
-hi User4 ctermfg=103  ctermbg=93
-hi User5 ctermfg=104  ctermbg=94
-hi User7 ctermfg=3  ctermbg=4 gui=bold
-hi User8 ctermfg=106  ctermbg=96
-hi User9 ctermfg=107  ctermbg=97
-hi User0 ctermfg=3  ctermbg=4
-
-"hi statusline ctermfg=white ctermbg=3
-"hi statusline ctermfg=white ctermbg=4
-
-au BufNewFile,BufRead *.gradle set filetype=groovy
+set background=dark
+colorscheme solarized
 
