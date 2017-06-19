@@ -2,8 +2,13 @@ export TERM=xterm-256color
 export PATH=/usr/local/bin:$PATH
 export PATH=/usr/local/sbin:$PATH
 
-source $(brew --prefix)/etc/bash_completion.d/git-completion.bash
-source $(brew --prefix)/etc/bash_completion.d/git-prompt.sh
+if [ $(which brew) ]; then
+	source $(brew --prefix)/etc/bash_completion.d/git-completion.bash
+	source $(brew --prefix)/etc/bash_completion.d/git-prompt.sh
+else
+	#source /etc/bash_completion.d/git-completion.bash
+	source /etc/bash_completion.d/git-prompt
+fi
 
 DIRECTORY_COLOR=ex
 SYMBOLI_LINKK_COLOR=fx
