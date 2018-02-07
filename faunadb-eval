@@ -1,0 +1,45 @@
+#!/usr/bin/env ruby
+
+require 'fauna'
+require 'optparse'
+ 
+options = {
+  domain: '0.0.0.0',
+  scheme: 'http',
+  port: 8443
+}
+
+optparse = OptionParser.new do | opts |
+  opts.version = '0.0.1'
+  opts.banner = "Usage: faunadb-eval [options] query"
+
+  opts.on( '-d', '--domain' '=HOST', "FaunaDB domain (default #{options[:domain]})" ) do | domain |
+    options[:domain] = domain
+  end
+
+  opts.on( '-s', '--scheme', '=SCHEME', [:http, :https], "Scheme (http, https)" ) do | scheme |
+    options[:scheme] = scheme
+  end
+
+  opts.on( '-p', '--port', '=PORT', Integer, "FaunaDB port (default #{options[:port]})" ) do | port |
+    options[:port] = port
+  end
+
+  opts.on( '-k', '--key', '=KEY', "FaunaDB secret" ) do | secret |
+    options[:secret] = secret
+  end
+
+  opts.on_tail( '-h', '--help', 'Display this screen' ) do
+    puts opts
+    exit
+  end
+end
+
+optparse.parse!(ARGV)
+
+if ARGV.length > 0 and options.key?(:secret)
+  client = Fauna::Client.new options
+  puts client.query { eval ARGV[0] }
+else
+  puts optparse
+end

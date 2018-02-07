@@ -31,10 +31,11 @@ export PS1="\[\033[36m\]\u\[\033[m\]@\[\033[32m\]\h:\[\033[33;1m\]\w\[\033[m\]\$
 alias ll='ls -l'
 alias la='ll -a'
 alias grep='grep --color'
+alias reset_camera='sudo killall VDCAssistant'
+alias catc='pygmentize -g'
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 [ -f ~/.privaterc.bash ] && source ~/.privaterc.bash
 
-eval "$(rbenv init -)"
 

@@ -40,6 +40,7 @@ set laststatus=2
 
 autocmd Filetype python setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2
 autocmd Filetype elm    setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2
+"autocmd Filetype go     setlocal noexpandtab softtabstop=0
 
 "vmap <C-c> y:call system("pbcopy", getreg("\""))<CR>
 "vmap <M-C> y:call system("pbcopy", getreg("\""))<CR>
@@ -57,4 +58,3 @@ imap <C-c> "+y<CR>
 
 set background=dark
 colorscheme solarized
-

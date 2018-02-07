@@ -17,6 +17,7 @@
 	rm-alias = "!sh -c '[ $# = 1 ] && git config --global --unset alias.\"$1\" && exit 0 || echo \"usage git rm-alias <alias-name>\" >&2 && exit 1' -"
 	st = status
 	fp = fetch -p
+	pf = push -f
 [core]
 	autocrlf = false
 	ignorecase = false
