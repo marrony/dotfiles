@@ -3,33 +3,46 @@
 require 'fauna'
 require 'optparse'
  
-options = {
+local_options = {
   domain: '0.0.0.0',
   scheme: 'http',
   port: 8443
 }
 
+cloud_options = {
+  domain: 'db.fauna.com',
+  scheme: 'https',
+  port: 443
+}
+
+user_options = { }
+options = local_options
+
 optparse = OptionParser.new do | opts |
   opts.version = '0.0.1'
-  opts.banner = "Usage: faunadb-eval [options] query"
+  opts.banner = 'Usage: faunadb-eval [options] query'
 
-  opts.on( '-d', '--domain' '=HOST', "FaunaDB domain (default #{options[:domain]})" ) do | domain |
-    options[:domain] = domain
+  opts.on( '-d', '--domain' '=HOST', 'FaunaDB domain' ) do | domain |
+    user_options[:domain] = domain
   end
 
-  opts.on( '-s', '--scheme', '=SCHEME', [:http, :https], "Scheme (http, https)" ) do | scheme |
-    options[:scheme] = scheme
+  opts.on( '-s', '--scheme', '=SCHEME', [:http, :https], 'Scheme (http, https)' ) do | scheme |
+    user_options[:scheme] = scheme
   end
 
-  opts.on( '-p', '--port', '=PORT', Integer, "FaunaDB port (default #{options[:port]})" ) do | port |
-    options[:port] = port
+  opts.on( '-p', '--port', '=PORT', Integer, 'FaunaDB port' ) do | port |
+    user_options[:port] = port
   end
 
-  opts.on( '-k', '--key', '=KEY', "FaunaDB secret" ) do | secret |
-    options[:secret] = secret
+  opts.on( '-k', '--key', '=KEY', 'FaunaDB secret (mandatory)' ) do | secret |
+    user_options[:secret] = secret
   end
 
-  opts.on_tail( '-h', '--help', 'Display this screen' ) do
+  opts.on( '-c', '--[no-]cloud', 'Use cloud FaunaDB' ) do | cloud |
+    options = cloud ? cloud_options : local_options
+  end
+
+  opts.on_tail( '-h', '--help', 'Display this help and exit' ) do
     puts opts
     exit
   end
@@ -37,8 +50,8 @@ end
 
 optparse.parse!(ARGV)
 
-if ARGV.length > 0 and options.key?(:secret)
-  client = Fauna::Client.new options
+if ARGV.length > 0 and user_options.key? :secret
+  client = Fauna::Client.new options.merge user_options
   puts client.query { eval ARGV[0] }
 else
   puts optparse
